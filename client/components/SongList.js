@@ -1,15 +1,15 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 
 /**
  * Fetches songs and represents them in a JSX ul element.
  *
- * @param {boolean} loading
- * @param {{id: string, title: string}[]} songs
  * @returns {JSX.Element}
  */
-const SongList = ({ data: { loading, songs } }) => {
+const SongList = () => {
+  const { loading, data } = useQuery(query);
+
   /**
    * Iterates over the songs array and returns a JSX element for each song.
    *
@@ -18,7 +18,7 @@ const SongList = ({ data: { loading, songs } }) => {
   const renderSongs = () => {
     if (loading) return (<div>Loading...</div>);
 
-    return songs.map(song => (<li key={song.id} className="collection-item">{song.title}</li>));
+    return data.songs.map(song => (<li key={song.id} className="collection-item">{song.title}</li>));
   }
 
   return (
@@ -30,4 +30,4 @@ const SongList = ({ data: { loading, songs } }) => {
 
 const query = gql`{ songs { id, title } }`;
 
-export default graphql(query)(SongList);
+export default SongList;
