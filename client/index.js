@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { IndexRoute, Route, Router, hashHistory } from 'react-router';
+import App from './components/App';
 import SongList from './components/SongList';
+import SongCreate from './components/SongCreate';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -11,7 +14,12 @@ const client = new ApolloClient({
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <SongList/>
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={SongList}/>
+          <Route path="songs/new" component={SongCreate} />
+        </Route>
+      </Router>
     </ApolloProvider>
   )
 };

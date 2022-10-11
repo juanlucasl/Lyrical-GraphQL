@@ -1,5 +1,7 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { Link } from 'react-router';
+import FETCH_SONGS from '../queries/fetchSongs';
 
 /**
  * Fetches songs and represents them in a JSX ul element.
@@ -7,7 +9,7 @@ import { useQuery, gql } from '@apollo/client';
  * @returns {JSX.Element}
  */
 const SongList = () => {
-  const { loading, data } = useQuery(GET_SONGS);
+  const { data, loading } = useQuery(FETCH_SONGS);
 
   /**
    * Iterates over the songs array and returns a JSX element for each song.
@@ -15,18 +17,21 @@ const SongList = () => {
    * @returns {JSX.Element | JSX.Element[]}
    */
   const renderSongs = () => {
-    if (loading) return (<div>Loading...</div>);
-
-    return data.songs.map(song => (<li key={song.id} className="collection-item">{song.title}</li>));
+    return data.songs.map(song => (
+      <li key={song.id} className="collection-item">{song.title}</li>
+    ));
   }
 
-  return (
-    <ul className="collection">
-      {renderSongs()}
-    </ul>
-  );
+  return loading ?
+    (<div>Loading...</div>) :
+    (<div>
+      <ul className="collection">
+        {renderSongs()}
+      </ul>
+      <Link to="/songs/new" className="btn-floating btn-large red right">
+        <i className="material-icons">add</i>
+      </Link>
+    </div>);
 }
-
-const GET_SONGS = gql`{ songs { id, title } }`;
 
 export default SongList;
