@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-
-const ADD_SONG = gql`
-    mutation AddSong($title: String) {
-        addSong(title: $title) {
-            title
-        }
-    }
-`
+import { hashHistory, Link } from 'react-router';
+import ADD_SONG from '../queries/addSong';
+import FETCH_SONGS from '../queries/fetchSongs';
 
 /**
  * Displays a form with a text input that sends a mutation to add a new song to
@@ -19,14 +14,19 @@ const SongCreate = () => {
   const [addSong, { data, loading }] = useMutation(ADD_SONG);
   const [title, setTitle] = useState('');
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    addSong({ variables: { title } });
+    await addSong({
+      variables: { title },
+      refetchQueries: [{ query: FETCH_SONGS }]
+    });
     setTitle('');
+    hashHistory.push('/');
   }
 
   return (
     <div>
+      <Link to="/">Back</Link>
       <h3>Create a New Song</h3>
       <form onSubmit={onSubmit}>
         <label>Song Title:</label>
