@@ -11,7 +11,7 @@ import FETCH_SONGS from '../queries/fetchSongs';
  * @returns {JSX.Element}
  */
 const SongCreate = () => {
-  const [addSong, { data, loading }] = useMutation(ADD_SONG);
+  const [addSong] = useMutation(ADD_SONG);
   const [title, setTitle] = useState('');
 
   const onSubmit = async (event) => {
