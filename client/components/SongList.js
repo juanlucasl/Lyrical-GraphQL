@@ -1,7 +1,8 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Link } from 'react-router';
 import FETCH_SONGS from '../queries/fetchSongs';
+import DELETE_SONG from '../queries/deleteSong';
 
 /**
  * Fetches songs and represents them in a JSX ul element.
@@ -9,7 +10,13 @@ import FETCH_SONGS from '../queries/fetchSongs';
  * @returns {JSX.Element}
  */
 const SongList = () => {
-  const { data, loading } = useQuery(FETCH_SONGS);
+  const { data, loading, refetch } = useQuery(FETCH_SONGS);
+  const [deleteSong] = useMutation(DELETE_SONG);
+
+  const onSongDelete = async (id) => {
+    await deleteSong({ variables: { id } });
+    await refetch();
+  }
 
   /**
    * Iterates over the songs array and returns a JSX element for each song.
@@ -18,7 +25,12 @@ const SongList = () => {
    */
   const renderSongs = () => {
     return data.songs.map(song => (
-      <li key={song.id} className="collection-item">{song.title}</li>
+      <li key={song.id} className="collection-item">
+        {song.title}
+        <i className="material-icons" onClick={() => onSongDelete(song.id)}>
+          delete
+        </i>
+      </li>
     ));
   }
 
