@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import { hashHistory, Link } from 'react-router';
+import { useMutation } from '@apollo/client';
+import { Link, useNavigate } from 'react-router-dom';
 import ADD_SONG from '../queries/addSong';
 import FETCH_SONGS from '../queries/fetchSongs';
 
@@ -12,6 +12,7 @@ import FETCH_SONGS from '../queries/fetchSongs';
  */
 const SongCreate = () => {
   const [addSong] = useMutation(ADD_SONG);
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
 
   const onSubmit = async (event) => {
@@ -21,7 +22,7 @@ const SongCreate = () => {
       refetchQueries: [{ query: FETCH_SONGS }]
     });
     setTitle('');
-    hashHistory.push('/');
+    navigate('/');
   }
 
   return (
