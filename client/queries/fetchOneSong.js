@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-    query FetchOneSong($id: ID!) {
-        song(id: $id) {
-            id,
-            title
-        }
+  query FetchOneSong($id: ID!) {
+    song(id: $id) {
+      id,
+      title
     }
+  }
 `;
