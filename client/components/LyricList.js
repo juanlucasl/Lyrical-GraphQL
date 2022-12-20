@@ -1,6 +1,8 @@
 import React from 'react';
 
 const LyricList = ({ lyrics }) => {
+  const onLike = (id) => {}
+
   /**
    * Iterates over the lyrics array and returns a JSX element for each song.
    *
@@ -11,13 +13,12 @@ const LyricList = ({ lyrics }) => {
       return (
         <li key={id} className="collection-item">
           {content}
+          <i className="material-icons" onClick={() => onLike(id)}>thumb_up</i>
         </li>
       );
     });
   };
 
-  // return loading ?
-  //   (<div>Loading...</div>) :
   return (
     <ul className="collection">{renderLyrics()}</ul>
   );
