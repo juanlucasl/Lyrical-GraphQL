@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import FETCH_SONGS from '../queries/fetchSongs';
-import DELETE_SONG from '../queries/deleteSong';
+import FETCH_SONGS from '../graphql/fetchSongs';
+import DELETE_SONG from '../graphql/deleteSong';
 
 /**
  * Fetches songs and represents them in a JSX ul element.

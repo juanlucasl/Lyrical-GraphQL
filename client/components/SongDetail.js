@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import FETCH_ONE_SONG from '../queries/fetchOneSong';
+import FETCH_ONE_SONG from '../graphql/fetchOneSong';
 import LyricCreate from './LyricCreate';
+import LyricList from './LyricList';
 
 /**
  * Fetches lyrics corresponding to a given song and represents them in a JSX ul
@@ -21,6 +22,7 @@ const SongDetail = () => {
     (<div>
       <Link to="/">Back</Link>
       <h3>{data.song.title}</h3>
+      <LyricList lyrics={data.song.lyrics} />
       <LyricCreate />
     </div>);
 }

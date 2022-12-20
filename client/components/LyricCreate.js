@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import ADD_LYRIC_TO_SONG from '../queries/addLyricToSong';
+import ADD_LYRIC_TO_SONG from '../graphql/addLyricToSong';
 
 /**
  * Displays a form with a text input that sends a mutation to add a new lyric
