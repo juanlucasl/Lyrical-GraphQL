@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import ADD_SONG from '../queries/addSong';
-import FETCH_SONGS from '../queries/fetchSongs';
+import ADD_SONG from '../graphql/addSong';
+import FETCH_SONGS from '../graphql/fetchSongs';
 
 /**
  * Displays a form with a text input that sends a mutation to add a new song to
