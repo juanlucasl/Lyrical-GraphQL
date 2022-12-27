@@ -1,7 +1,13 @@
 import React from 'react';
+import { useMutation } from '@apollo/client';
+import LIKE_LYRIC from '../graphql/likeLyric';
 
 const LyricList = ({ lyrics }) => {
-  const onLike = (id) => {}
+  const [likeLyric] = useMutation(LIKE_LYRIC);
+
+  const onLike = (id) => {
+    likeLyric({ variables: { id } });
+  }
 
   /**
    * Iterates over the lyrics array and returns a JSX element for each song.
