@@ -5,8 +5,18 @@ import LIKE_LYRIC from '../graphql/likeLyric';
 const LyricList = ({ lyrics }) => {
   const [likeLyric] = useMutation(LIKE_LYRIC);
 
-  const onLike = (id) => {
-    likeLyric({ variables: { id } });
+  const onLike = (id, likes) => {
+    likeLyric({
+      optimisticResponse: {
+        __typename: 'Mutation',
+        likeLyric: {
+          __typename: 'LyricType',
+          id,
+          likes: likes + 1
+        }
+      },
+      variables: { id }
+    });
   }
 
   /**
@@ -15,11 +25,14 @@ const LyricList = ({ lyrics }) => {
    * @returns {JSX.Element | JSX.Element[]}
    */
   const renderLyrics = () => {
-    return lyrics.map(({ id, content }) => {
+    return lyrics.map(({ id, content, likes }) => {
       return (
         <li key={id} className="collection-item">
           {content}
-          <i className="material-icons" onClick={() => onLike(id)}>thumb_up</i>
+          <div className="vote-box">
+            <i className="material-icons" onClick={() => onLike(id, likes)}>thumb_up</i>
+            {likes}
+          </div>
         </li>
       );
     });
